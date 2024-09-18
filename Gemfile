@@ -38,9 +38,18 @@ gem "bootsnap", require: false
 # Use Money to handle amounts and currencies
 gem "money-rails", "~> 1.15"
 
+# Use serializers for the API
+gem 'active_model_serializers', '~> 0.10.14'
+
+# Use pundit a authorization system
+gem 'pundit', '~> 2.4'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+  gem "rspec-rails", "~> 7.0", ">= 7.0.1"
+  gem "factory_bot_rails", "~> 6.4", ">= 6.4.3"
+  gem "faker", "~> 3.4", ">= 3.4.2"
 end
 
 group :development do

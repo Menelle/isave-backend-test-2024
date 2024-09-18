@@ -10,7 +10,7 @@ class CreateInstruments < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :instruments, :isin
+    add_index :instruments, :isin, unique: true
     add_index :instruments, :type
   end
 end

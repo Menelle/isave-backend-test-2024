@@ -2,7 +2,7 @@
 
 class Portfolio::CompteCourant < Portfolio
 
-  def type
+  def type_value
     "Compte dépôt"
   end
 

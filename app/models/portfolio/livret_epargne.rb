@@ -1,6 +1,6 @@
 class Portfolio::LivretEpargne < Portfolio
 
-  def type
+  def type_value
     "Livret A"
   end
 

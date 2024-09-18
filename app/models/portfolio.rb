@@ -1,5 +1,5 @@
 class Portfolio < ApplicationRecord
-  INSTRUMENT_TYPES = ["CTO", "PEA", "Assurance Vie", "Livret A", "Compte dépôt"]
+  INSTRUMENT_TYPES = ["Portfolio::Cto", "Portfolio::Pea", "Portfolio::AssuranceVie", "Portfolio::LivretEpargne", "Portfolio::CompteCourant"]
 
   monetize :amount_cents
 

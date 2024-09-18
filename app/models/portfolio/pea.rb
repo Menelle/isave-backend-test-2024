@@ -1,8 +1,8 @@
 class Portfolio::Pea < Portfolio
-
+  has_many :investments, foreign_key: :portfolio_id
   has_many :instruments, through: :investments
 
-  def type
+  def type_value
     "PEA"
   end
 
