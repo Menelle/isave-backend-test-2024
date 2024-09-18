@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   namespace "api" do
     namespace "v1", defaults: { format: :json } do
-      resources :portfolios, only: [:index]
+      resources :portfolios, only: %i(index create update destroy)
     end
   end
 end
