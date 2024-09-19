@@ -1,6 +1,5 @@
-module PortFolioManager do
-
-  class Withdrawal do
+module PortfolioManager
+  class Withdrawal
 
     class WithdrawalError < StandardError; end
     Result = Struct.new(:success?, :errors)
@@ -14,13 +13,11 @@ module PortFolioManager do
     end
 
     def call
-      raise WithdrawalError, "Insufficient funds" if insufficient_funds?
-
       # prevent customer to withdraw more than available
-      available_withdrawal_amount = [investment.amount, amount].min
+      raise WithdrawalError, "Insufficient funds, available: #{available_withdrawal_amount.format}" if insufficient_funds?
       ActiveRecord::Base.transaction do
-        portfolio.update!(amount: portfolio.amount - available_withdrawal_amount)
-        investment.update!(amount: available_withdrawal_amount)
+        portfolio.update!(amount: portfolio.amount - amount_monetized)
+        investment.update!(amount: investment.amount - amount_monetized)
       end
     rescue => e
       Result.new(success?: false, errors: e.message)
@@ -30,10 +27,18 @@ module PortFolioManager do
 
     private
 
+
+    def amount_monetized
+      Money.new(amount.to_f * 100, Money.default_currency.iso_code)
+    end
+
     def insufficient_funds?
-      investment.amount < amount
+      investment.amount < amount_monetized
+    end
+
+    def available_withdrawal_amount
+      [investment.amount, amount_monetized].min
     end
 
   end
-
 end

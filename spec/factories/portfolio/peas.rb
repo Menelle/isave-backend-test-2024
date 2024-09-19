@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :portfolio_cto, class: "Portfolio::Cto" do
-    type { "Portfolio::Cto" }
-    label { "Portefeuille d'actions" }
+  factory :portfolio_pea, class: "Portfolio::Pea" do
+    type { "Portfolio::Pea" }
+    label { "Portefeuille Équilibré" }
     amount { Money.new(Faker::Commerce.price(range: 10000.0..100000.0), "EUR") }
 
     trait :with_investments do

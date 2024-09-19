@@ -10,7 +10,13 @@ Rails.application.routes.draw do
 
   namespace "api" do
     namespace "v1", defaults: { format: :json } do
-      resources :portfolios, only: %i(index create update destroy)
+      resources :portfolios, only: %i(index) do
+        member do
+          post "deposit"
+          post "withdrawal"
+          post "transfer"
+        end
+      end
     end
   end
 end

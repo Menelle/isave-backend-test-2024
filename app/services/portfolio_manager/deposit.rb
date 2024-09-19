@@ -1,6 +1,7 @@
-module PortFolioManager do
+module PortfolioManager
+  class Deposit
 
-  class Deposit do
+    Result = Struct.new(:success?, :errors)
 
     attr_reader :portfolio, :investment, :amount
 
@@ -12,14 +13,21 @@ module PortFolioManager do
 
     def call
       ActiveRecord::Base.transaction do
-        portfolio.update!(amount: portfolio.amount + amount)
-        investment.update!(amount: amount)
+        portfolio.update!(amount: portfolio.amount + amount_monetized)
+        investment.update!(amount: investment.amount + amount_monetized)
       end
     rescue => e
       Result.new(success?: false, errors: e.message)
     else
       Result.new(success?: true)
     end
+
+    private
+
+    def amount_monetized
+      Money.new(amount.to_f * 100, Money.default_currency.iso_code)
+    end
+
 
   end
 
