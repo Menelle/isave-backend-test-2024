@@ -29,7 +29,7 @@ module PortfolioManager
 
 
     def amount_monetized
-      Money.new(amount.to_f * 100, Money.default_currency.iso_code)
+      Money.new(amount.to_f * 100)
     end
 
     def insufficient_funds?

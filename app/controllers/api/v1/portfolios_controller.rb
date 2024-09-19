@@ -1,6 +1,6 @@
 class Api::V1::PortfoliosController < Api::V1::ApplicationController
 
-  before_action :set_portfolio, except: %i(index)
+  before_action :set_portfolio, except: %i(index risk break)
 
   def index
     # NOTE: authorization for the customer here
@@ -84,10 +84,5 @@ class Api::V1::PortfoliosController < Api::V1::ApplicationController
   def transfer_params
     params.permit(:id, :investment_from_id, :investment_to_id, :amount)
   end
-
-# { "contracts": ActiveModel::Serializer::CollectionSerializer.new(
-#   portfolios,
-#   serializer: PortfolioSerializer,
-# ).as_json }
 
 end
