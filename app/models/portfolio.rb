@@ -16,6 +16,7 @@ class Portfolio < ApplicationRecord
   monetize :amount_cents
 
   belongs_to :customer
+  has_many :portfolio_histories, dependent: :destroy
 
   validates :type, inclusion: { in: TYPES }
 

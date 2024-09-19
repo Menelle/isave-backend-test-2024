@@ -143,3 +143,13 @@ end
   next unless investment
   Investment.where(instrument: instrument, portfolio: Portfolio::AssuranceVie.first).first_or_create(amount: investment[:amount])
 end
+
+
+file = File.read('./data/level_4/historical_values.json')
+data_hash = JSON.parse(file)
+data_hash.each{ |portfolio, entries|
+  portfolio = customer.portfolios.find_by!(label: portfolio)
+  entries.each{ |entry|
+    PortfolioHistory.where(portfolio_id: portfolio.id, captured_at: Date.strptime(entry["date"], "%d-%m-%y")).first_or_create(amount: entry["amount"])
+  }
+}

@@ -1,6 +1,6 @@
 class Api::V1::Portfolios::RisksController < Api::V1::ApplicationController
 
-  before_action :set_portfolios, only: %i(index)
+  before_action :set_portfolios
 
 
   # NOTE: I want to see the risk level of each portfolio, so I know how much risk I'm taking on each set of investments
@@ -10,7 +10,7 @@ class Api::V1::Portfolios::RisksController < Api::V1::ApplicationController
       if params[:ids].present?
         ActiveModel::Serializer::CollectionSerializer.new(
           @portfolios,
-          serializer: PortfolioRiskSerializer,
+          serializer: PortfolioRiskSerializer
         )
       else
         { amount: Portfolio.total_amount(@portfolios), risk: Portfolio.total_risk_level(@portfolios) }

@@ -9,7 +9,7 @@ class Api::V1::Portfolios::BreaksController < Api::V1::ApplicationController
       if params[:ids].present?
         ActiveModel::Serializer::CollectionSerializer.new(
           @portfolios,
-          serializer: PortfolioBreakSerializer,
+          serializer: PortfolioBreakSerializer
         )
       else
         { breakdown: Portfolio.investments_cents_by_types(@portfolios) }

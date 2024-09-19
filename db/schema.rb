@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_18_135946) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_19_153156) do
   create_table "customers", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -44,6 +44,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_135946) do
     t.index ["instrument_id"], name: "index_investments_on_instrument_id"
     t.index ["portfolio_id", "instrument_id"], name: "index_investments_on_portfolio_id_and_instrument_id", unique: true
     t.index ["portfolio_id"], name: "index_investments_on_portfolio_id"
+  end
+
+  create_table "portfolio_histories", force: :cascade do |t|
+    t.integer "portfolio_id"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "EUR", null: false
+    t.date "captured_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["portfolio_id"], name: "index_portfolio_histories_on_portfolio_id"
   end
 
   create_table "portfolios", force: :cascade do |t|

@@ -1,6 +1,6 @@
 class Api::V1::Portfolios::FeesController < Api::V1::ApplicationController
 
-  before_action :set_portfolios, only: %i(index)
+  before_action :set_portfolios
 
 
   # NOTE: The current amount of fees applied to each of my portfolios.
@@ -11,10 +11,13 @@ class Api::V1::Portfolios::FeesController < Api::V1::ApplicationController
       if params[:ids].present?
         ActiveModel::Serializer::CollectionSerializer.new(
           @portfolios,
-          serializer: PortfolioFeeSerializer,
+          serializer: PortfolioFeeSerializer
         )
       else
-        { amount: Portfolio.total_amount(@portfolios), fees: Portfolio.fees(@portfolios) }
+        {
+          amount: Portfolio.total_amount(@portfolios),
+          fees: Portfolio.fees(@portfolios)
+        }
       end
       render json: result.as_json
   end

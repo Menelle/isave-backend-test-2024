@@ -15,6 +15,8 @@ Rails.application.routes.draw do
           get "risk(/:ids)", to: "portfolios/risks#index", as: :risk_api_v1_portfolio
           get "break(/:ids)", to: "portfolios/breaks#index", as: :break_api_v1_portfolio
           get "fee(/:ids)", to: "portfolios/fees#index", as: :fee_api_v1_portfolio
+          get "history(/:ids)(/:date)", to: "portfolios/histories#index", as: :history_api_v1_portfolio
+          get "growth(/:ids)(/:date)", to: "portfolios/growths#index", as: :growth_api_v1_portfolio
         end
         member do
           post "deposit"

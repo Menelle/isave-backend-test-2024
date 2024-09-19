@@ -1,3 +1,50 @@
+# Howto
+
+```
+# deposit
+post api/v1/portfolios/1/deposit?investment_id=X&amount=Y
+
+# withdraw
+post api/v1/portfolios/1/withdraw?investment_id=X&amount=Y
+
+# transfer
+post api/v1/portfolios/1/transfer?investment_from_id=X&investment_to_id=Y&amount=Z
+```
+
+```
+# view risk
+GET api/v1/portfolios/risk # all
+GET api/v1/portfolios/risk/2 # by portfolio
+```
+
+```
+# view fees
+GET api/v1/portfolios/fee # all
+GET api/v1/portfolios/fee/2 # by portfolio
+```
+
+```
+# view breakdown
+GET api/v1/portfolios/break # all
+GET api/v1/portfolios/break/2 # by portfolio
+```
+
+```
+# view history
+GET api/v1/portfolios/history # all
+GET api/v1/portfolios/history/2 # by portfolio
+GET api/v1/portfolios/history/2/2022-01-08 # by portfolio at a previous date
+```
+
+```
+# view growth/return
+GET api/v1/portfolios/growth # all
+GET api/v1/portfolios/growth/2 # by portfolio
+GET api/v1/portfolios/growth/2/2022-01-08 # by portfolio at a previous date
+```
+
+
+
 # WeSave Backend Challenge - iSave
 
 Version en Français [ici](README.fr.md).
