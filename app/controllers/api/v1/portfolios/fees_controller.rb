@@ -1,18 +1,20 @@
-class Api::V1::Portfolios::BreaksController < Api::V1::ApplicationController
+class Api::V1::Portfolios::FeesController < Api::V1::ApplicationController
 
   before_action :set_portfolios, only: %i(index)
 
-  # NOTE: I want to see the breakdown of my Portfolio by investment type (stock, bond, etc.) to understand how my money is invested.
-  # NOTE: I want to see the overall breakdown of all my investments by type, to understand where all my money is spread across all my portfolios
+
+  # NOTE: The current amount of fees applied to each of my portfolios.
+  # NOTE: The current percentage of fees applied to each of my portfolios.
+  # NOTE: The above values, but globally on all my investments.
   def index
     result =
       if params[:ids].present?
         ActiveModel::Serializer::CollectionSerializer.new(
           @portfolios,
-          serializer: PortfolioBreakSerializer,
+          serializer: PortfolioFeeSerializer,
         )
       else
-        { breakdown: Portfolio.investments_cents_by_types(@portfolios) }
+        { amount: Portfolio.total_amount(@portfolios), fees: Portfolio.fees(@portfolios) }
       end
       render json: result.as_json
   end

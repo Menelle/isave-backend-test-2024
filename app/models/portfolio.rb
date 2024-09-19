@@ -4,6 +4,12 @@ class Portfolio < ApplicationRecord
   TYPE_ASSURANCE_VIE = "Portfolio::AssuranceVie".freeze
   TYPES_INVESTING = [TYPE_CTO, TYPE_PEA, TYPE_ASSURANCE_VIE]
   TYPES = [TYPE_CTO, TYPE_PEA, TYPE_ASSURANCE_VIE, "Portfolio::LivretEpargne", "Portfolio::CompteCourant"]
+  FEE_STEPS = [
+    [0.008, 10000],
+    [0.02, 7500],
+    [0.03, 5000],
+    [0.05, 0]
+  ]
 
   scope :investing, -> { where(type: TYPES_INVESTING) }
 
@@ -34,6 +40,10 @@ class Portfolio < ApplicationRecord
     investments.joins(:instrument).group("instruments.type").sum("investments.amount_cents")
   end
 
+  def fees
+    FeesCalculator.new(amount: amount.to_d).call
+  end
+
   class << self
     def total_risk_level(portfolios)
       (portfolios.map{ |portfolio| portfolio.risk_level }.sum / portfolios.size).round(2)
@@ -46,6 +56,11 @@ class Portfolio < ApplicationRecord
     def investments_cents_by_types(portfolios)
       Investment.where(portfolio: portfolios).joins(:instrument).group("instruments.type").sum("investments.amount_cents")
     end
+
+    def fees(portfolios)
+      FeesCalculator.new(amount: self.total_amount(portfolios)).call
+    end
+
   end
 
 end

@@ -12,8 +12,9 @@ Rails.application.routes.draw do
     namespace "v1", defaults: { format: :json } do
       resources :portfolios, only: %i(index) do
         collection do
-          get "risk(/:id)", to: "portfolios/risks#index", as: :risk_api_v1_portfolio
-          get "break(/:id)", to: "portfolios/breaks#index", as: :break_api_v1_portfolio
+          get "risk(/:ids)", to: "portfolios/risks#index", as: :risk_api_v1_portfolio
+          get "break(/:ids)", to: "portfolios/breaks#index", as: :break_api_v1_portfolio
+          get "fee(/:ids)", to: "portfolios/fees#index", as: :fee_api_v1_portfolio
         end
         member do
           post "deposit"

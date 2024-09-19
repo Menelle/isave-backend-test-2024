@@ -1,6 +1,7 @@
-class PortfolioBreakSerializer < ActiveModel::Serializer
+class PortfolioFeeSerializer < ActiveModel::Serializer
   attributes :label
-  attribute :investments_by_types, key: :breakdown
+  attribute :amount_value, key: :amount
+  attributes :fees
 
   def investments_by_types
     object.investments_by_type.transform_values{ |v| Money.new(v).to_d }

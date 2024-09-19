@@ -7,7 +7,7 @@ class Api::V1::Portfolios::RisksController < Api::V1::ApplicationController
   # NOTE: I want to know the overall risk I'm taking by considering all my portfolios, so I can get a complete picture of my financial risks
   def index
     result =
-      if params[:id].present?
+      if params[:ids].present?
         ActiveModel::Serializer::CollectionSerializer.new(
           @portfolios,
           serializer: PortfolioRiskSerializer,
@@ -23,7 +23,7 @@ class Api::V1::Portfolios::RisksController < Api::V1::ApplicationController
   def set_portfolios
     @portfolios ||=
       current_customer.portfolios.investing.includes(investments: :instrument).yield_self{ |relation|
-        params[:id].present? ? relation.where(id: params[:id]) : relation
+        params[:ids].present? ? relation.where(id: params[:ids].split(",")) : relation
       }
   end
 
