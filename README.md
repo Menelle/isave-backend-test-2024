@@ -3,30 +3,104 @@
 ```
 # deposit
 post api/v1/portfolios/1/deposit?investment_id=X&amount=Y
+=> OK 201 Created { "success": true }
+=> KO 403 Forbidden {success: false, errors: "" }
 
 # withdraw
 post api/v1/portfolios/1/withdraw?investment_id=X&amount=Y
+=> OK 201 Created { "success": true }
+=> KO Data 403 Forbidden {success: false, errors: "" }
+=> KO Fund 403 Forbidden { "success": false, "errors": "Insufficient funds, available: 00.00" }
 
 # transfer
 post api/v1/portfolios/1/transfer?investment_from_id=X&investment_to_id=Y&amount=Z
+=> OK 201 Created { "success": true }
+=> KO Data 403 Forbidden {success: false, errors: "" }
+=> KO Fund 403 Forbidden { "success": false, "errors": "Insufficient funds, available: 00.00" }
 ```
 
 ```
 # view risk
 GET api/v1/portfolios/risk # all
 GET api/v1/portfolios/risk/2 # by portfolio
+
+Examples:
+GET api/v1/portfolios/risk
+{
+  "amount": "104900.0",
+  "risk": "1.84"
+}
+
+GET api/v1/portfolios/risk/2
+[
+  {
+    "label": "PEA - Portefeuille Équilibré",
+    "amount": "30000.0",
+    "risk": "1.67"
+  }
+]
+
 ```
 
 ```
 # view fees
 GET api/v1/portfolios/fee # all
 GET api/v1/portfolios/fee/2 # by portfolio
+
+Examples:
+GET api/v1/portfolios/fee
+{
+  "amount": "104900.0",
+  "fees": {
+    "0_008": "759.2",
+    "0_02": "50.0",
+    "0_03": "75.0",
+    "0_05": "250.0"
+  }
+}
+
+GET api/v1/portfolios/fee/1
+[
+  {
+    "label": "Portefeuille d'actions",
+    "amount": "24900.0",
+    "fees": {
+      "0_008": "119.2",
+      "0_02": "50.0",
+      "0_03": "75.0",
+      "0_05": "250.0"
+    }
+  }
+]
+
 ```
 
 ```
 # view breakdown
 GET api/v1/portfolios/break # all
 GET api/v1/portfolios/break/2 # by portfolio
+
+Examples:
+GET api/v1/portfolios/break
+{
+  "breakdown": {
+    "bond": 8635000,
+    "euro_fund": 5000000,
+    "stock": 8350000
+  }
+}
+
+GET api/v1/portfolios/break/2
+[
+  {
+    "label": "Portefeuille d'actions",
+    "breakdown": {
+      "bond": "36350.0",
+      "stock": "53500.0"
+    }
+  }
+]
+
 ```
 
 ```
@@ -34,6 +108,57 @@ GET api/v1/portfolios/break/2 # by portfolio
 GET api/v1/portfolios/history # all
 GET api/v1/portfolios/history/2 # by portfolio
 GET api/v1/portfolios/history/2/2022-01-08 # by portfolio at a previous date
+
+Examples:
+GET api/v1/portfolios/history
+[
+  {
+    "label": "Portefeuille d'actions",
+    "history": [
+      {
+        "amount": "400.0",
+        "date": "01-01-22"
+      },
+      ...
+    ]
+  },
+  {
+    "label": "Assurance Vie - Plan d'Épargne",
+    "history": [
+      {
+        "amount": "400.0",
+        "date": "01-01-22"
+      },
+      ...
+    ]
+  }
+]
+
+GET api/v1/portfolios/history/2
+[
+  {
+    "label": "PEA - Portefeuille Équilibré",
+    "history": [
+      {
+        "amount": "400.0",
+        "date": "01-01-22"
+      },
+      ...
+  }
+]
+
+GET api/v1/portfolios/history/2/2022-01-08
+[
+  {
+    "label": "PEA - Portefeuille Équilibré",
+    "history": [
+      {
+        "amount": "420.0",
+        "date": "08-01-22"
+      }
+    ]
+  }
+]
 ```
 
 ```
@@ -41,6 +166,45 @@ GET api/v1/portfolios/history/2/2022-01-08 # by portfolio at a previous date
 GET api/v1/portfolios/growth # all
 GET api/v1/portfolios/growth/2 # by portfolio
 GET api/v1/portfolios/growth/2/2022-01-08 # by portfolio at a previous date
+
+Examples:
+
+GET api/v1/portfolios/growth
+[
+  {
+    "label": "Portefeuille d'actions",
+    "return": "6625.0%",
+    "current_date": "27-09-2024"
+  },
+  {
+    "label": "PEA - Portefeuille Équilibré",
+    "return": "7400.0%",
+    "current_date": "27-09-2024"
+  },
+  {
+    "label": "Assurance Vie - Plan d'Épargne",
+    "return": "12400.0%",
+    "current_date": "27-09-2024"
+  }
+]
+
+GET api/v1/portfolios/growth/2
+[
+  {
+    "label": "PEA - Portefeuille Équilibré",
+    "return": "7400.0%",
+    "current_date": "27-09-2024"
+  }
+]
+
+GET api/v1/portfolios/growth/2/2022-01-08
+[
+  {
+    "label": "PEA - Portefeuille Équilibré",
+    "return": "5.0%",
+    "current_date": "08-01-2022"
+  }
+]
 ```
 
 
