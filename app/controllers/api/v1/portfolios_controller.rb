@@ -1,6 +1,6 @@
 class Api::V1::PortfoliosController < Api::V1::ApplicationController
 
-  before_action :set_portfolio, except: %i(index risk break)
+  before_action :set_portfolio
 
   def index
     # NOTE: authorization for the customer here
